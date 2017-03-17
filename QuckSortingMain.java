@@ -2,8 +2,7 @@ import java.util.Random;
 
 class QuckSortingMain {
     public static void main(String[] args) {
-        QuickSorting qs = new QuickSorting(generateArray());
-        String[] sortedArray = qs.getSortedArray();
+        QuickSorting.getSortedArray(generateArray());
     }
 
     static String[] generateArray() {
