@@ -35,7 +35,7 @@ class QuickSorting {
     int split(String[] sorted, int leftIdx, int rightIdx) {
         int i = leftIdx;
         int j = rightIdx+1;
-        String central = sorted[leftIdx];
+        String central = sorted[(rightIdx-leftIdx)/2];
         while (true) {
             while (less(sorted[++i], central)) if (i == rightIdx) break;
             while (less(central, sorted[--j])) if (j == leftIdx) break;
