@@ -1,62 +1,54 @@
-import java.util.Random;
-
 class QuickSorting {
-    String[] sorted;
-    int size;
+    String[] array;
 
-    QuickSorting(int size) {
-        this.size = size;
-        if (size <= 0) size = 12;
-        sorted = new String[size];
-        String[] sorted = createarray();
-    }
-
-    String[] createarray() {
-        String abc = "qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLLPOIUYTREWQ";
-        Random rnd = new Random();
-        for (int i = 0; i < size; i++) {
-            String result = "";
-            int length = rnd.nextInt(7) + 1;
-            for (int j = 0; j < length; j++) {
-                result += abc.charAt(rnd.nextInt(abc.length()));
-            }
-            sorted[i] = result;
-        }
-        return sorted;
+    QuickSorting(String[] array) {
+        this.array = array;
+        sort(array, 0, array.length - 1);
     }
 
     void sort(String[] sortedarray, int leftIdx, int rightIdx) {
         if (rightIdx <= leftIdx) return;
-        int centrIdx = split(sorted, leftIdx, rightIdx);
-        sort(sorted, leftIdx, centrIdx - 1);
+        int centrIdx = split(array, leftIdx, rightIdx);
+        sort(array, leftIdx, centrIdx - 1);
         sort(sortedarray, centrIdx + 1, rightIdx);
     }
 
-    int split(String[] sorted, int leftIdx, int rightIdx) {
+    int split(String[] array, int leftIdx, int rightIdx) {
         int i = leftIdx;
-        int j = rightIdx+1;
-        String central = sorted[leftIdx];
+        int j = rightIdx + 1;
+        String centr = medianOf3(array, leftIdx, rightIdx);
         while (true) {
-            while (less(sorted[++i], central)) if (i == rightIdx) break;
-            while (less(central, sorted[--j])) if (j == leftIdx) break;
+            while (less(array[++i], centr)) if (i == rightIdx) break;
+            while (less(centr, array[--j])) if (j == leftIdx) break;
             if (i >= j) break;
-            exchange(sorted, i, j);
+            exchange(array, i, j);
         }
-        exchange(sorted, leftIdx, j);
+        exchange(array, leftIdx, j);
         return j;
+    }
+
+    String medianOf3(String[] array, int leftIdx, int rightIdx) {
+        int centr = (leftIdx + rightIdx) / 2;
+        if (less(array[centr], array[leftIdx]))
+            exchange(array, leftIdx, centr);
+        if (less(array[rightIdx], array[leftIdx]))
+            exchange(array, leftIdx, rightIdx);
+        if (less(array[rightIdx], array[centr]))
+            exchange(array, rightIdx, centr);
+        return array[centr];
     }
 
     boolean less(String v, String w) {
         return v.compareTo(w) < 0;
     }
 
-    void exchange(String[] sorted, int i, int j) {
-        String strtmp = sorted[i];
-        sorted[i] = sorted[j];
-        sorted[j] = strtmp;
+    void exchange(String[] array, int i, int j) {
+        String strtmp = array[i];
+        array[i] = array[j];
+        array[j] = strtmp;
     }
 
     String[] getSortedArray() {
-        return sorted;
+        return array;
     }
 }
